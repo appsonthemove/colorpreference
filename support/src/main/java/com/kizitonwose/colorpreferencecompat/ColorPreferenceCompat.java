@@ -39,6 +39,10 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         initAttrs(null, 0);
     }
 
+    public void setColorChoices(int[] colorChoices) {
+        this.colorChoices = colorChoices;
+    }
+
     private void initAttrs(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().getTheme().obtainStyledAttributes(
                 attrs, R.styleable.ColorPreferenceCompat, defStyle, defStyle);
