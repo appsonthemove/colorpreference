@@ -23,7 +23,6 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
     private int numColumns = 5;
     private ColorShape colorShape = ColorShape.CIRCLE;
     private boolean showDialog = true;
-    private int defaultValue = 0;
 
     public ColorPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -70,21 +69,18 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         super.onBindViewHolder(holder);
         ImageView colorView = (ImageView) holder.findViewById(R.id.color_view);
         if (colorView != null) {
-            ColorUtils.setColorViewValue(colorView, value != 0 ? value : defaultValue, false, colorShape);
+            ColorUtils.setColorViewValue(colorView, value, false, colorShape);
         }
     }
 
-    public void setValue(int value) {
+    public void setValue(int value, boolean persist) {
         if (callChangeListener(value)) {
             this.value = value;
-            persistInt(value);
+            if (persist) {
+                persistInt(value);
+            }
             notifyChanged();
         }
-    }
-
-    public void setDefaultValue(int defaultValue) {
-        this.defaultValue = defaultValue;
-        notifyChanged();
     }
 
     @Override
@@ -112,7 +108,7 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setValue(restoreValue ? getPersistedInt(0) : (Integer) defaultValue);
+        setValue(restoreValue ? getPersistedInt(0) : (Integer) defaultValue, true);
     }
 
     public String getFragmentTag() {
@@ -125,6 +121,6 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
 
     @Override
     public void onColorSelected(int newColor, String tag) {
-        setValue(newColor);
+        setValue(newColor, true);
     }
 }
