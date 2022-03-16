@@ -68,7 +68,7 @@ public class PreferenceCompatActivity extends BaseActivity {
                     .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((ColorPreferenceCompat) preference).setValue(lobsterPicker.getColor());
+                            ((ColorPreferenceCompat) preference).setValue(lobsterPicker.getColor(), true);
                         }
                     })
                     .setNegativeButton("CLOSE", null)
