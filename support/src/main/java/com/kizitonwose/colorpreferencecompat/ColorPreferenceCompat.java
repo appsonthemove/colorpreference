@@ -23,6 +23,7 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
     private int numColumns = 5;
     private ColorShape colorShape = ColorShape.CIRCLE;
     private boolean showDialog = true;
+    private int defaultValue = 0;
 
     public ColorPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -69,7 +70,7 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         super.onBindViewHolder(holder);
         ImageView colorView = (ImageView) holder.findViewById(R.id.color_view);
         if (colorView != null) {
-            ColorUtils.setColorViewValue(colorView, value, false, colorShape);
+            ColorUtils.setColorViewValue(colorView, value != 0 ? value : defaultValue, false, colorShape);
         }
     }
 
@@ -81,6 +82,10 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         }
     }
 
+    public void setDefaultValue(int defaultValue) {
+        this.defaultValue = defaultValue;
+        notifyChanged();
+    }
 
     @Override
     protected void onClick() {
