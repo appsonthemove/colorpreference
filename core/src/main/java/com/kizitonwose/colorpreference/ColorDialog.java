@@ -24,6 +24,8 @@ public class ColorDialog extends DialogFragment {
     private OnColorSelectedListener colorSelectedListener;
     private int numColumns;
     private int[] colorChoices;
+    private String[] colorChoiceNames;
+    private String colorNotSetString;
     private ColorShape colorShape;
 
     //the color to be checked
@@ -33,15 +35,19 @@ public class ColorDialog extends DialogFragment {
     private static final String COLOR_SHAPE_KEY = "color_shape";
     private static final String COLOR_CHOICES_KEY = "color_choices";
     private static final String SELECTED_COLOR_KEY = "selected_color";
+    private static final String COLOR_CHOICE_NAMES_KEY = "color_choice_names";
+    private static final String COLOR_NOT_SET_KEY = "color_not_set";
 
     public ColorDialog() {
     }
 
-    public static ColorDialog newInstance(int numColumns, ColorShape colorShape, int[] colorChoices, int selectedColorValue) {
+    public static ColorDialog newInstance(int numColumns, ColorShape colorShape, int[] colorChoices, String[] colorChoiceNames, String colorNotSetString, int selectedColorValue) {
         Bundle args = new Bundle();
         args.putInt(NUM_COLUMNS_KEY, numColumns);
         args.putSerializable(COLOR_SHAPE_KEY, colorShape);
         args.putIntArray(COLOR_CHOICES_KEY, colorChoices);
+        args.putStringArray(COLOR_CHOICE_NAMES_KEY, colorChoiceNames);
+        args.putString(COLOR_NOT_SET_KEY, colorNotSetString);
         args.putInt(SELECTED_COLOR_KEY, selectedColorValue);
 
         ColorDialog dialog = new ColorDialog();
@@ -57,6 +63,8 @@ public class ColorDialog extends DialogFragment {
         numColumns = args.getInt(NUM_COLUMNS_KEY);
         colorShape = (ColorShape) args.getSerializable(COLOR_SHAPE_KEY);
         colorChoices = args.getIntArray(COLOR_CHOICES_KEY);
+        colorChoiceNames = args.getStringArray(COLOR_CHOICE_NAMES_KEY);
+        colorNotSetString = args.getString(COLOR_NOT_SET_KEY);
         selectedColorValue = args.getInt(SELECTED_COLOR_KEY);
     }
 
@@ -116,6 +124,21 @@ public class ColorDialog extends DialogFragment {
                     dismiss();
                 }
             });
+
+            String colorName = colorNotSetString;
+
+            if (colorChoiceNames != null) {
+                for (int index = 0; index < colorChoices.length; index++) {
+                    if (colorChoices[index] == color && index < colorChoiceNames.length) {
+                        colorName = colorChoiceNames[index];
+                        break;
+                    }
+                }
+            }
+
+            if (colorName != null) {
+                itemView.setContentDescription(colorName);
+            }
 
             colorGrid.addView(itemView);
         }
@@ -203,7 +226,7 @@ public class ColorDialog extends DialogFragment {
         }
 
         protected ColorDialog build() {
-            ColorDialog dialog = ColorDialog.newInstance(numColumns, colorShape, colorChoices, selectedColor);
+            ColorDialog dialog = ColorDialog.newInstance(numColumns, colorShape, colorChoices, null, null, selectedColor);
             dialog.setOnColorSelectedListener((OnColorSelectedListener) context);
             return dialog;
         }

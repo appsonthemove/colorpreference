@@ -75,7 +75,7 @@ public class ColorPreference extends Preference implements ColorDialog.OnColorSe
         super.onClick();
         if (showDialog) {
             ColorUtils.showDialog(getContext(), this, getFragmentTag(),
-                    numColumns, colorShape, colorChoices, getValue());
+                    numColumns, colorShape, colorChoices, null, getValue(), null);
         }
     }
 

@@ -17,6 +17,8 @@ import com.kizitonwose.colorpreference.PreviewSize;
  */
 public class ColorPreferenceCompat extends Preference implements ColorDialog.OnColorSelectedListener {
     private int[] colorChoices = {};
+    private String[] colorChoiceNames = {};
+    private String colorNotSetString = "No colour set";
     private int value = 0;
     private int itemLayoutId = R.layout.pref_color_layout;
     private int itemLayoutLargeId = R.layout.pref_color_layout_large;
@@ -41,6 +43,14 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
 
     public void setColorChoices(int[] colorChoices) {
         this.colorChoices = colorChoices;
+    }
+
+    public void setColorChoiceNames(String[] colorChoiceNames) {
+        this.colorChoiceNames = colorChoiceNames;
+    }
+
+    public void setColorNotSetString(String value) {
+        this.colorNotSetString = value;
     }
 
     private void initAttrs(AttributeSet attrs, int defStyle) {
@@ -70,6 +80,17 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         ImageView colorView = (ImageView) holder.findViewById(R.id.color_view);
         if (colorView != null) {
             ColorUtils.setColorViewValue(colorView, value, false, colorShape);
+            colorView.setContentDescription(colorNotSetString);
+            if (colorChoiceNames != null) {
+                for (int index = 0; index < colorChoices.length; index++) {
+                    if (colorChoices[index] == value) {
+                        if (index < colorChoiceNames.length) {
+                            colorView.setContentDescription(colorChoiceNames[index]);
+                        }
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -88,7 +109,7 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         super.onClick();
         if (showDialog) {
             ColorUtils.showDialog(getContext(), this, getFragmentTag(),
-                    numColumns, colorShape, colorChoices, getValue());
+                    numColumns, colorShape, colorChoices, null, getValue(), null);
         }
     }
 

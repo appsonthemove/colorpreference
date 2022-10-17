@@ -81,8 +81,8 @@ public class ColorUtils {
     }
 
     public static void showDialog(Context context, ColorDialog.OnColorSelectedListener listener, String tag,
-                                  int numColumns, ColorShape colorShape, int[] colorChoices, int selectedColorValue) {
-        ColorDialog fragment = ColorDialog.newInstance(numColumns, colorShape, colorChoices, selectedColorValue);
+                                  int numColumns, ColorShape colorShape, int[] colorChoices, String[] colorChoiceNames, int selectedColorValue, String colorNotSetString) {
+        ColorDialog fragment = ColorDialog.newInstance(numColumns, colorShape, colorChoices, colorChoiceNames, colorNotSetString, selectedColorValue);
         fragment.setOnColorSelectedListener(listener);
 
         Activity activity = Utils.resolveContext(context);

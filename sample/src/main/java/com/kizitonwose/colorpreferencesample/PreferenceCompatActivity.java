@@ -24,7 +24,6 @@ public class PreferenceCompatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference_compat);
         setTitle("ColorPreferenceCompat sample");
-
     }
 
     public static class MyPreferenceFragmentCompat extends PreferenceFragmentCompat {
@@ -61,6 +60,20 @@ public class PreferenceCompatActivity extends BaseActivity {
             lobsterPicker.setColorHistoryEnabled(true);
             lobsterPicker.setHistory(color);
             lobsterPicker.setColor(color);
+
+            ColorPreferenceCompat colorPref = (ColorPreferenceCompat) preference;
+            colorPref.setColorChoices(new int[] {
+                    Color.BLUE,
+                    Color.YELLOW,
+                    Color.RED,
+                    Color.BLACK
+            });
+            colorPref.setColorChoiceNames(new String[] {
+                    "Blue",
+                    "Yellow",
+                    "Red"
+            });
+            colorPref.setColorNotSetString("Colour not set");
 
             new AlertDialog.Builder(getActivity())
                     .setView(colorView)
