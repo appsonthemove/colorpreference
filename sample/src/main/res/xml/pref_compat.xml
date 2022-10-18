@@ -12,7 +12,7 @@
             app:iconSpaceReserved="false"
             android:defaultValue="@color/colorPrimaryAlternate"
             android:key="color_pref_circle_compat"
-            android:summary="An example of using the circle color view"
+            android:summary="An example of using the circle color view with names"
             android:title="Circle color sample"
             app:colorChoices="@array/color_choices"
             app:colorShape="circle" />

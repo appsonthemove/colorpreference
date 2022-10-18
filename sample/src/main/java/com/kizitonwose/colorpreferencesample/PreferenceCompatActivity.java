@@ -29,10 +29,25 @@ public class PreferenceCompatActivity extends BaseActivity {
     public static class MyPreferenceFragmentCompat extends PreferenceFragmentCompat {
 
         private final String CUSTOM_PICKER_PREF_KEY = "color_pref_lobster_compat";
+        private final String CIRCLE_PREF_KEY = "color_pref_circle_compat";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_compat);
+
+            ColorPreferenceCompat circlePref = findPreference(CIRCLE_PREF_KEY);
+            circlePref.setColorChoices(new int[] {
+                            Color.BLUE,
+                            Color.YELLOW,
+                            Color.RED,
+                            Color.BLACK
+                    });
+            circlePref.setColorChoiceNames(new String[] {
+                    "Blue",
+                    "Yellow",
+                    "Red"
+            });
+            circlePref.setColorNotSetString("Colour not set");
 
             findPreference(CUSTOM_PICKER_PREF_KEY).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -60,20 +75,6 @@ public class PreferenceCompatActivity extends BaseActivity {
             lobsterPicker.setColorHistoryEnabled(true);
             lobsterPicker.setHistory(color);
             lobsterPicker.setColor(color);
-
-            ColorPreferenceCompat colorPref = (ColorPreferenceCompat) preference;
-            colorPref.setColorChoices(new int[] {
-                    Color.BLUE,
-                    Color.YELLOW,
-                    Color.RED,
-                    Color.BLACK
-            });
-            colorPref.setColorChoiceNames(new String[] {
-                    "Blue",
-                    "Yellow",
-                    "Red"
-            });
-            colorPref.setColorNotSetString("Colour not set");
 
             new AlertDialog.Builder(getActivity())
                     .setView(colorView)

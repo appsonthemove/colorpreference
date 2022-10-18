@@ -2,9 +2,14 @@ package com.kizitonwose.colorpreferencecompat;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
+
+import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.kizitonwose.colorpreference.ColorDialog;
@@ -109,7 +114,7 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         super.onClick();
         if (showDialog) {
             ColorUtils.showDialog(getContext(), this, getFragmentTag(),
-                    numColumns, colorShape, colorChoices, null, getValue(), null);
+                    numColumns, colorShape, colorChoices, colorChoiceNames, getValue(), colorNotSetString);
         }
     }
 
